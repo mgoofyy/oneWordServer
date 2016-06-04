@@ -1,24 +1,13 @@
 var mongoose = require("mongoose");
-var mongooseConnect = mongoose.connect("mongodb:http://127.0.0.1:oneWord");
+var mongooseConnect = mongoose.connect("mongodb://localhost/goofyy");
 
 /**
  * 简历用户信息模型
  * @type {mongoose}
  */
 var UserModel = new mongoose.Schema({
-	userInfo:{
-		userName:String,
-		userAvater:String,
-		age:Number,
-		birthday:Date,//ISO-8601 DATE
-		userPlace:String,
-		lastLoginTime:Date,
-		createTime:Date
-	},
-	deviceInfo:{
-		device:Array, // USER UAUAL DEVICE
-		device_app_version:String
-	}
+	name:String,
+	age:String
 });
 
 
@@ -44,7 +33,12 @@ UserModel.pre('save', function (next) {
 UserModel.statics = {
 	updateUserProfile: function(callBack) {
 
-	}
+	},
+	findByName: function (name, callBack) {
+        return this
+            .findOne({name: name})
+            .exec(callBack);
+    }
 }
 
 /**
